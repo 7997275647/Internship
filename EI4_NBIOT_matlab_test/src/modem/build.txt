@@ -1,0 +1,5 @@
+includeDirs = {'C:\Users\H555102\Downloads\standalone1\src\os\arch\x86\inc', 'C:\Users\H555102\Downloads\standalone1\src\modem\inc', 'C:\Users\H555102\Downloads\standalone1\src\app\inc', 'C:\Users\H555102\Downloads\standalone1\src\os\inc', 'C:\Users\H555102\Downloads\standalone1\src\modem'};
+sourceFiles = {'src/os/os.c', 'src/modem/modem_at.c', 'src/modem/modem.c', 'src/modem/modem_cmd.c', 'src/modem/modem_hal.c','src/modem/modem_stats.c','src/modem/modem_umi.c'};
+mex('-v', '-I', includeDirs{:}, sourceFiles{:});
+
+mex -v CFLAGS="-I'C:\Users\H555102\Downloads\standalone1\src\os\arch\x86\inc' -I'C:\Users\H555102\Downloads\standalone1\src\modem\inc' -I'C:\Users\H555102\Downloads\standalone1\src\app\inc' -I'C:\Users\H555102\Downloads\standalone1\src\os\inc' -I'C:\Users\H555102\Downloads\standalone1\src\modem'" src/os/os.c src/modem/modem_at.c src/modem/modem.c src/modem/modem_cmd.c src/modem/modem_hal.c src/modem/modem_stats.c src/modem/modem_umi.c

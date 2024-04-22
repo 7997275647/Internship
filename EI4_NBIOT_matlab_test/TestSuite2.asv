@@ -1,0 +1,126 @@
+clc
+if (1)
+    mex -I'src'  ...
+        -I'src\os\arch\x86\inc' ... 
+        -I'src\modem\inc' ...
+        -I'src\app\inc' ...
+        -I'src\os\inc' ...
+        -I'src\modem'  ...
+        src/test_modem_app.c ...
+        src/modem/modem.c ...
+        src/modem/modem_at.c ...
+        src/modem/modem_cmd.c ...
+        src/modem/modem_hal.c ...
+        src/modem/modem_stats.c ...
+        src/modem/modem_umi.c ...
+        src/os/os.c ...
+        
+end
+
+% Test 1: Modem Startup
+
+test_modem_app('switch_modem_on');
+assert(test_modem_app('check_last_received_at_cmd','AT') == 1);
+test_modem_app('modem_send_at_cmd', 2, 'AT', 'OK');
+assert(test_modem_app('check_last_received_at_cmd','ATI') == 1);
+test_modem_app('modem_send_at_cmd', 3, 'ATI', 'HL7810', 'OK');
+assert(test_modem_app('check_last_received_at_cmd','AT+CGMR') == 1);
+test_modem_app('modem_send_at_cmd', 3, 'AT+CGMR', 'HL7810.4.6.9.4', 'OK');
+
+% Test 2: Modem Configuration
+assert(test_modem_app('check_last_received_at_cmd','AT+KGSN=3') == 1);
+test_modem_app('modem_send_at_cmd', 3, 'AT+KGSN=3','+KGSN: D13062105213B1', 'OK');
+assert(test_modem_app('check_last_received_at_cmd','AT+CGSN') == 1);
+test_modem_app('modem_send_at_cmd', 3, 'AT+CGSN', '354720510148914', 'OK');
+assert(test_modem_app('check_last_received_at_cmd','AT+CGDCONT?') == 1);
+%% Test 1: injecting_wrong_PDP_Context_from_modem_to_driver
+test_modem_app('modem_send_at_cmd', 3, '+CGDCONT: 1,''IPV4V6'',''.cxn'',,0,0,0,0,0,,0,,,,','+CGDCONT: 2,''IPV4V6'',,,0,0,0,0,0,,0,,,,' , 'OK');% wrong APN
+assert(test_modem_app('check_last_received_at_cmd','AT+CGDCONT=1,IPV4V6,"''internet.cxn''",,0,0,0,0,0,,0,,,,,') == 1);
+test_modem_app('modem_send_at_cmd', 3, '+CGDCONT: 1,''IPV4V6'',"''intet.cxn''",,0,0,0,0,0,,0,,,,','+CGDCONT: 2,''IPV4V6'',,,0,0,0,0,0,,0,,,,' , 'OK');% wrong APN
+assert(test_modem_app('check_last_received_at_cmd','AT+CGDCONT=1,IPV4V6,"''internet.cxn''",,0,0,0,0,0,,0,,,,,') == 1);
+test_modem_app('modem_send_at_cmd', 3, '+CGDCONT: 1,''IPV4V6'',"''internet.cxn''",,0,0,0,0,0,,0,,,,','+CGDCONT: 2,''IPV4V3'',,,0,0,0,0,0,,0,,,,' , 'OK');
+
+%% Test 2: injecting_wrong_LTE_Band_from_modem_to_driver
+assert(test_modem_app('check_last_received_at_cmd','AT+KBNDCFG?') == 1);
+test_modem_app('modem_send_at_cmd', 4, '+KBNDCFG: 0,000000000000000A0A188E','+KBNDCFG: , ', '+KBNDCFG: 2,0' , 'OK');% wrong +KBNDCFG:
+assert(test_modem_app('check_last_received_at_cmd','AT+KBNDCFG?') == 1);
+test_modem_app('modem_send_at_cmd', 4, '+KBNDCFG: 0,000000000000000A0A1880','+KBNDCFG: 1,0000000000000000080084', '+KBNDCFG: 2,0' , 'OK');% wrong +KBNDCFG:
+assert(test_modem_app('check_last_received_at_cmd','AT+KBNDCFG=0,000000000000000A0A188E') == 1);
+test_modem_app('modem_send_at_cmd', 4, '+KBNDCFG: 0,000000000000000A0A188E','+KBNDCFG: 1,0000000000000000080084', '+KBNDCFG: 2,0' , 'OK');
+%% Test 3: injecting_wrong_RAT_Response_from_modem_to_driver
+assert(test_modem_app('check_last_received_at_cmd','AT+KSELACQ?') == 1);
+test_modem_app('modem_send_at_cmd', 2, '+KSELACQ: ','OK'); %wrong +KSELACQ:
+assert(test_modem_app('check_last_received_at_cmd','AT+KSELACQ=0,2,1') == 1);% need to set +KSELACQ
+test_modem_app('modem_send_at_cmd', 2, '+KSELACQ: 2,1','OK');% reset needed after configuring
+test_modem_app('modem_reset');
+assert(test_modem_app('check_last_received_at_cmd','AT') == 1);
+test_modem_app('modem_send_at_cmd', 2, 'AT', 'OK');
+
+
+assert(test_modem_app('check_last_received_at_cmd','AT+CEREG?') == 1);
+test_modem_app('modem_send_at_cmd', 2, '+CEREG: 2,0','OK');
+assert(test_modem_app('check_last_received_at_cmd','AT+CFUN?') == 1);
+test_modem_app('modem_send_at_cmd', 2, '+CFUN: 0','OK');
+
+assert(test_modem_app('check_last_received_at_cmd','AT+KBND?') == 1);
+test_modem_app('modem_send_at_cmd', 2, '+KBND:1,','OK');% no LTE Band Resopnse from modem
+assert(test_modem_app('check_last_received_at_cmd','AT+KBND?') == 1);
+test_modem_app('modem_send_at_cmd', 2, '+KBND: 1,0000000000000000080084','OK');
+
+assert(test_modem_app('check_last_received_at_cmd','AT+CCID') == 1);
+test_modem_app('modem_send_at_cmd', 2, '+CCID: +491747365135','OK');
+test_modem_app('timer_modem_next_action');
+assert(test_modem_app('check_last_received_at_cmd','AT+CFUN=1,1') == 1);
+test_modem_app('modem_send_at_cmd', 4, 'AT+CFUN=1,1','OK','+CEREG: 2','+WDSI: 0');
+test_modem_app('set_cts');
+assert(test_modem_app('check_last_received_at_cmd','AT') == 1);
+test_modem_app('modem_send_at_cmd', 7, 'AT', 'OK','+CEREG: 2','+CEREG: 0','+CEREG: 2','+CEREG: 2','+CEREG: 5,"DAD9","01AF8F0D",9');
+test_modem_app('modem_reset');
+assert(test_modem_app('check_last_received_at_cmd','AT') == 1);
+test_modem_app('modem_send_at_cmd', 2, 'AT', 'OK');
+
+assert(test_modem_app('check_last_received_at_cmd','AT+CGDCONT?') == 1);
+test_modem_app('modem_send_at_cmd', 3, '+CGDCONT: 1,''IPV4V6'',''internet.cxn'',,0,0,0,0,0,,0,,,,','+CGDCONT: ",''IPV4V6'',,,0,0,0,0,0,,0,,,,' , 'OK');
+assert(test_modem_app('check_last_received_at_cmd','AT+KBND?') == 1);
+test_modem_app('modem_send_at_cmd', 3,'AT+KBND?','+KBND: 1,0000000000000000000080', 'OK');
+assert(test_modem_app('check_last_received_at_cmd','AT+CESQ') == 1);
+test_modem_app('modem_send_at_cmd', 3, 'AT+CESQ','+CESQ: 99,99,255,255,20,39','OK');
+test_modem_app('timer_modem_next_action');
+assert(test_modem_app('check_last_received_at_cmd','AT+KCNXCFG=1,"GPRS","''internet.cxn''"') == 1);
+test_modem_app('modem_send_at_cmd', 2, 'AT+KCNXCFG=1,"GPRS","''internet.cxn''"','OK');
+assert(test_modem_app('check_last_received_at_cmd','AT+KUDPCFG=1,0') == 1);%need to stub connection type as UDP before this step
+test_modem_app('modem_send_at_cmd', 5, 'AT+KUDPCFG=1,0','+KUDPCFG: 1','OK','+KCNX_IND: 1,1,0','+KUDP_IND: 1,1');
+% Test 3: Modem Data Transfer
+assert(test_modem_app('check_last_received_at_cmd','AT+KUDPSND=1,"199.64.78.128",4154,0') == 1);%need to stub  uint8_t *modem_queuedTxPkg = (int *)50 from NULL
+test_modem_app('modem_send_at_cmd', 4, 'AT+KUDPSND=1,"199.64.78.128",4154,0','CONNECT','OK','+KUDP_DATA: 1,51');
+assert(test_modem_app('check_last_received_at_cmd','AT+KUDPRCV=1,51') == 1);
+test_modem_app('modem_send_at_cmd', 5, 'AT+KUDPRCV=1,51','CONNECT','00 01 00 10 00 01 00 2b 60 29 a1 09 06 07 60 85 74 05 08 01 01 a6 0a 04 08 45 49 43 54 43 4f 4d 4d be 10 04 0e 01 00 00 00 06 5f 1f 04 00 00 7e 1f 10 00 --EOF--Pattern--','OK','+KUDP_RCV: "199.64.78.128",4154');
+assert(test_modem_app('check_last_received_at_cmd','AT+CESQ') == 1);
+test_modem_app('modem_send_at_cmd', 3, 'AT+CESQ','+CESQ: 99,99,255,255,19,40','OK');
+% Test 4: Modem UDP session closing
+assert(test_modem_app('check_last_received_at_cmd','AT+KUDPCLOSE=1') == 1);
+test_modem_app('modem_send_at_cmd', 2, 'AT+KUDPCLOSE= 1','OK');
+assert(test_modem_app('check_last_received_at_cmd','AT+KUDPDEL=?') == 1);
+test_modem_app('modem_send_at_cmd', 2, '+KUDPDEL: 0','OK');
+assert(test_modem_app('check_last_received_at_cmd','AT+CFUN=4,1') == 1);
+test_modem_app('modem_send_at_cmd', 6, 'AT+CFUN=4,1','OK','+CEREG: 0','+CEREG: 0','+KCNX_IND: 1,0,0','+WDSI: 0');
+test_modem_app('modem_reset');
+assert(test_modem_app('check_last_received_at_cmd','AT') == 1);
+test_modem_app('modem_send_at_cmd', 2, 'AT', 'OK');
+
+assert(test_modem_app('check_last_received_at_cmd','AT+CFUN?') == 1);
+test_modem_app('modem_send_at_cmd', 3, 'AT+CFUN?','+CFUN: 1', 'OK');% giving wrong functionality response to driver application
+assert(test_modem_app('check_last_received_at_cmd','AT+CFUN=4,1') == 1);
+test_modem_app('modem_send_at_cmd', 3, 'AT+CFUN?','+CFUN: 4', 'OK');
+test_modem_app('modem_reset');% Modem should go 
+assert(test_modem_app('check_last_received_at_cmd','AT') == 1);
+test_modem_app('modem_send_at_cmd', 2, 'AT', 'OK');
+assert(test_modem_app('check_last_received_at_cmd','AT+CFUN?') == 1);
+test_modem_app('modem_send_at_cmd', 3, 'AT+CFUN?','+CFUN: 4', 'OK');
+
+test_modem_app('timer_modem_next_action');
+assert(test_modem_app('check_last_received_at_cmd','AT+CPOF') == 1);
+test_modem_app('modem_send_at_cmd', 2, 'AT+CPOF', 'OK');
+test_modem_app('timer_modem_next_action');
+
+

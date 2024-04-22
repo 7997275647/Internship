@@ -1,0 +1,5 @@
+﻿modem.obj : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "_mexPrintf_800" in Funktion "_Modem_ConnectActions".
+C:\Program Files\MATLAB\R2023b\extern\lib\win64\microsoft\libmx.lib : warning LNK4272: Bibliothekcomputertyp "x64" steht in Konflikt mit dem Zielcomputertyp "x86"
+C:\Program Files\MATLAB\R2023b\extern\lib\win64\microsoft\libmex.lib : warning LNK4272: Bibliothekcomputertyp "x64" steht in Konflikt mit dem Zielcomputertyp "x86"
+C:\Program Files\MATLAB\R2023b\extern\lib\win64\microsoft\libmat.lib : warning LNK4272: Bibliothekcomputertyp "x64" steht in Konflikt mit dem Zielcomputertyp "x86"
+C:\Users\H253275\OneDrive - Honeywell\Documents\MATLAB\standalone1\src\Debug\modem test in matlab.dll : fatal error LNK1120: 1 nicht aufgelöste Externe

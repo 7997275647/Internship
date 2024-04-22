@@ -1,0 +1,1 @@
+var fullCoverageData = {"FileCount":0,"ExecutableLineCount":0,"ExecutedLineCount":0,"MissedLineCount":0,"LineRate":null,"CommonRootPath":"","FileCoverageArray":{"RelativePath":[],"ExecutableLineCount":[],"ExecutedLineCount":[],"MissedLineCount":[],"LineRate":[]}}

@@ -1,0 +1,1 @@
+#define PRINTF_WARN(...)

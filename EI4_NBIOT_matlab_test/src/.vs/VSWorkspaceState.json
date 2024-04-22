@@ -1,0 +1,17 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\app",
+    "\\modem",
+    "\\modem\\inc",
+    "\\modem\\inc\\modem",
+    "\\os",
+    "\\os\\arch",
+    "\\os\\arch\\x86",
+    "\\os\\arch\\x86\\inc",
+    "\\os\\arch\\x86\\inc\\os",
+    "\\os\\inc"
+  ],
+  "SelectedNode": "\\modem\\inc\\modem\\modem.h",
+  "PreviewInSolutionExplorer": false
+}

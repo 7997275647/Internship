@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="test_modem_app.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="modem\modem.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="modem\modem_at.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="modem\modem_cmd.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="modem\modem_console.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="modem\modem_hal.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="modem\modem_stats.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="modem\modem_stats_sim.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="modem\modem_umi.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="modem_app_test\modem_app_test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="os\os.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="test_modem_app.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="app\inc\store\umi_codes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="app\inc\store\umi_metadata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="modem\modem_at.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="modem\modem_cmd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="modem\modem_debug.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="modem\modem_hal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="modem\modem_stats.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="modem\modem_umi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="modem\inc\modem\modem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="modem\inc\modem\modem_console.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="os\arch\x86\inc\os\arch_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="os\inc\os\app_scheduler_entries.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="os\inc\os\config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="os\inc\os\debug.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="os\inc\os\error.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="os\inc\os\gds.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="os\inc\os\loop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="os\inc\os\rtc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="os\inc\os\rtc_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="os\inc\os\sched.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="os\inc\os\store.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="os\inc\os\timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="os\inc\os\types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="os\inc\os\umi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="os\inc\os\umi_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="os\inc\os\utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
